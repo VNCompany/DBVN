@@ -17,7 +17,10 @@ namespace VNC.dbvn
 
     public class DBTable
     {
-        public static DBTable CreateTable(params DBColumn[] columns)
+        public event Action<DBTable> TableSaved;
+        public event Action<DBTable> TableDeleted;
+
+        public static DBTable CreateTable(string name, params DBColumn[] columns)
         {
             List<DBColumn> cc = new List<DBColumn>();
             cc.Add(new DBColumn("id", false, ColumnDateType.None));
@@ -27,7 +30,7 @@ namespace VNC.dbvn
                     throw new VDataBaseException("Не допускается хранение стобцов с одинаковым именем. Ошибка парсинга", "vdbobjs", 0xa);
                 cc.Add(column);
             }
-            return new DBTable(new string[][] { cc.Select(t => t.ToString()).ToArray() }, 1);
+            return new DBTable(new string[][] { cc.Select(t => t.ToString()).ToArray() }, 1, name);
         }
 
         bool err = false;
@@ -39,13 +42,17 @@ namespace VNC.dbvn
             }
         }
 
+        public string Name { get; private set; }
+
         List<DBColumn> cols = new List<DBColumn>();
         List<DBRow> rows = new List<DBRow>();
 
         public int Increment { get; private set; }
 
-        public DBTable(string[][] @base, int increment)
+        public DBTable(string[][] @base, int increment, string name)
         {
+            Name = name;
+
             cols.Clear();
             rows.Clear();
 
@@ -238,13 +245,21 @@ namespace VNC.dbvn
             }
         }
 
-        public void ClearTable()
+        public void Clear()
         {
             rows.Clear();
             Increment = 0;
         }
 
-        public void 
+        public void Save()
+        {
+            TableSaved?.Invoke(this);
+        }
+
+        public void Delete()
+        {
+            TableDeleted?.Invoke(this);
+        }
     }
 
     public class DBRowCollection : IEnumerable<DBRow>

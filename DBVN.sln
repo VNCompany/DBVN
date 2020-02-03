@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "vdbobjs", "vdbobjs\vdbobjs.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTester", "UnitTester\UnitTester.csproj", "{73F28C3E-F0EB-4DB0-8C37-9A0FD0FD963B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "vrsman", "vrsman\vrsman.csproj", "{AD94DCA6-8794-4AD9-AB07-07F778BE885B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{73F28C3E-F0EB-4DB0-8C37-9A0FD0FD963B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{73F28C3E-F0EB-4DB0-8C37-9A0FD0FD963B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{73F28C3E-F0EB-4DB0-8C37-9A0FD0FD963B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD94DCA6-8794-4AD9-AB07-07F778BE885B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD94DCA6-8794-4AD9-AB07-07F778BE885B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD94DCA6-8794-4AD9-AB07-07F778BE885B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD94DCA6-8794-4AD9-AB07-07F778BE885B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

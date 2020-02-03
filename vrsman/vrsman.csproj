@@ -4,17 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1A3A675C-DB59-4F54-A0BF-C32F8FAA8EB6}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>DBVN_Test</RootNamespace>
-    <AssemblyName>DBVN_Test</AssemblyName>
+    <ProjectGuid>{AD94DCA6-8794-4AD9-AB07-07F778BE885B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>VNC.dbvn</RootNamespace>
+    <AssemblyName>vrsman</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,7 +23,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -35,6 +33,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -43,25 +42,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\vdbobjs\vdbobjs.csproj">
-      <Project>{dc24e3d1-5425-4640-a8cf-f94162d34506}</Project>
-      <Name>vdbobjs</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\vdbread\vdbread.csproj">
-      <Project>{2f1b7fbb-1138-4a6e-b420-df60fc9e9ad5}</Project>
-      <Name>vdbread</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\vrsman\vrsman.csproj">
-      <Project>{ad94dca6-8794-4ad9-ab07-07f778be885b}</Project>
-      <Name>vrsman</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
