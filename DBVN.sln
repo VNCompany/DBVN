@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTester", "UnitTester\Un
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "vrsman", "vrsman\vrsman.csproj", "{AD94DCA6-8794-4AD9-AB07-07F778BE885B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "vcfgman", "vcfgman\vcfgman.csproj", "{9CF994C3-3C56-40D6-BC1F-13A8E1FD06EF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{AD94DCA6-8794-4AD9-AB07-07F778BE885B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD94DCA6-8794-4AD9-AB07-07F778BE885B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AD94DCA6-8794-4AD9-AB07-07F778BE885B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CF994C3-3C56-40D6-BC1F-13A8E1FD06EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CF994C3-3C56-40D6-BC1F-13A8E1FD06EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CF994C3-3C56-40D6-BC1F-13A8E1FD06EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CF994C3-3C56-40D6-BC1F-13A8E1FD06EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

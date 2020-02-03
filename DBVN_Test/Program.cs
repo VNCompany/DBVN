@@ -12,8 +12,22 @@ namespace DBVN_Test
     {
         static void Main(string[] args)
         {
-            VResourceManager rss = new VResourceManager("C://Users/vnezn/Desktop/resources");
-            rss.AddResource("text.txt", Encoding.UTF8.GetBytes("Привет, мир!"));
+            VConfig cfg = VConfig.Create(@"C://Users/vnezn/Desktop/test.cfg");
+
+            var sDefault = cfg.GetSection();
+
+            sDefault.Add("hello", "world");
+
+            Console.WriteLine(cfg.SectionExist("Def"));
+            Console.WriteLine(cfg.SectionExist("Default"));
+            Console.WriteLine(sDefault.ItemExists("world"));
+            Console.WriteLine(sDefault.ItemExists("hello"));
+
+            var sMainSettings = cfg.Add("MainSettings");
+            sMainSettings.Add("main", "land");
+
+            cfg.Save();
+            Console.ReadLine();
         }
     }
 }
