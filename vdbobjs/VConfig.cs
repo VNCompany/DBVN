@@ -99,6 +99,12 @@ namespace VNC.dbvn
                 }
             }
         }
+
+        public void Delete()
+        {
+            if (file.Exists)
+                file.Delete();
+        }
     }
 
     public class VCSection : IEnumerable<VCItem>

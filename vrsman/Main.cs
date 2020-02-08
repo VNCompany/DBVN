@@ -120,5 +120,13 @@ namespace VNC.dbvn
                 or.Read(buffer, offset, count);
             }
         }
+
+        public override string ToString()
+        {
+            if (FileInfo().Exists)
+                return File.ReadAllText(FileInfo().FullName);
+            else
+                return null;
+        }
     }
 }

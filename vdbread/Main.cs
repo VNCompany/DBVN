@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 
 namespace VNC.dbvn
 {
-    public class DataBaseBinaryReader
+    public class DataBaseBinaryReader : IDisposable
     {
         FileInfo fi;
         byte[] data;
@@ -159,10 +159,16 @@ namespace VNC.dbvn
 
         public void Write()
         {
-            using (var ow = fi.OpenWrite())
+            using (FileStream fs = new FileStream(fi.FullName, FileMode.Create, FileAccess.Write))
             {
-                ow.Write(data, 0, data.Length);
+                fs.Write(data, 0, data.Length);
             }
+        }
+
+        public void Dispose()
+        {
+            data = null;
+            fi = null;
         }
 
         public void ReadBytes(byte[] buffer, int offset, int count=-1)

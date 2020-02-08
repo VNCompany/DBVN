@@ -172,5 +172,17 @@ namespace VNC.dbvn
             }
             reg_vnc.Close();
         }
+
+        public static bool CheckValidateFileName(string filename)
+        {
+            char[] invalid_chars = Path.GetInvalidFileNameChars();
+            foreach (char fn_char in filename)
+            {
+                if (fn_char == '\\' || fn_char == '/' || invalid_chars.Contains(fn_char))
+                    return false;
+            }
+
+            return true;
+        }
     }
 }

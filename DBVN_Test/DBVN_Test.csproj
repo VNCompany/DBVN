@@ -50,13 +50,25 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\vcfgman\vcfgman.csproj">
+      <Project>{9cf994c3-3c56-40d6-bc1f-13a8e1fd06ef}</Project>
+      <Name>vcfgman</Name>
+    </ProjectReference>
     <ProjectReference Include="..\vdbobjs\vdbobjs.csproj">
       <Project>{dc24e3d1-5425-4640-a8cf-f94162d34506}</Project>
       <Name>vdbobjs</Name>
     </ProjectReference>
+    <ProjectReference Include="..\vdbread\vdbread.csproj">
+      <Project>{2f1b7fbb-1138-4a6e-b420-df60fc9e9ad5}</Project>
+      <Name>vdbread</Name>
+    </ProjectReference>
     <ProjectReference Include="..\vndbw\vndbw.csproj">
       <Project>{93c24003-8b0c-4119-b07e-09d85a45f93d}</Project>
       <Name>vndbw</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\vrsman\vrsman.csproj">
+      <Project>{ad94dca6-8794-4ad9-ab07-07f778be885b}</Project>
+      <Name>vrsman</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

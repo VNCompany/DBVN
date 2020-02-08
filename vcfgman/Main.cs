@@ -18,7 +18,7 @@ namespace VNC.dbvn
 
         public bool ConfigExists(string cfgName)
         {
-            cfgName += "ini";
+            cfgName += ".ini";
             string full_path = Path.Combine(path.FullName, cfgName);
 
             return File.Exists(full_path);

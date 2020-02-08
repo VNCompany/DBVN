@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
+using System.IO;
 
 namespace VNC.dbvn
 {
@@ -22,6 +23,7 @@ namespace VNC.dbvn
 
         public static DBTable CreateTable(string name, VS source, params DBColumn[] columns)
         {
+            if (columns.Length == 0) throw new VDataBaseException("Таблица должна иметь хотя бы один пользовательский столбец", "DBTable24", 0xa);
             List<DBColumn> cc = new List<DBColumn>();
             cc.Add(new DBColumn("id", false, ColumnDateType.None));
             foreach(var column in columns)
@@ -82,8 +84,7 @@ namespace VNC.dbvn
                             @base[r][c] = null;
                         cells[c] = (@base[r][c], cols[c]);
                     }
-                    dbr = new DBRow(cells, src);
-                    dbr.ElementDeleted += RowDeleted;
+                    dbr = new DBRow(cells, src, this);
                     rows.Add(dbr);
                 }
 
@@ -150,8 +151,7 @@ namespace VNC.dbvn
                 result[i] = (row[i], cols[i]);
             }
 
-            DBRow dbr = new DBRow(result, src);
-            dbr.ElementDeleted += RowDeleted;
+            DBRow dbr = new DBRow(result, src, this);
             rows.Add(dbr);
             Increment++;
         }
@@ -223,11 +223,6 @@ namespace VNC.dbvn
                 action.Invoke(row);
         }
 
-        private void RowDeleted(DBRow row)
-        {
-            DeleteRow(row.ID);
-        }
-
         public DBRowCollection Where(Func<DBRow, bool> predicate)
         {
             return new DBRowCollection(rows.Where(predicate));
@@ -252,7 +247,7 @@ namespace VNC.dbvn
         public void Clear()
         {
             rows.Clear();
-            Increment = 0;
+            Increment = 1;
         }
 
         public void Save()
@@ -263,6 +258,17 @@ namespace VNC.dbvn
         public void Delete()
         {
             TableDeleted?.Invoke(this);
+        }
+
+        public string BigText(string source, string value)
+        {
+            string fp = src.Src(source, out VSType vst);
+            if (vst == VSType.Cell)
+            {
+                File.WriteAllText(fp, value);
+                return source;
+            }
+            return null;
         }
     }
 
@@ -376,15 +382,18 @@ namespace VNC.dbvn
 
     public class DBRow
     {
-        public event Action<DBRow> ElementDeleted;
+        public DBTable Parent { get; private set; }
 
         List<DBCell> dbcells = new List<DBCell>();
         public int ID { get; private set; }
+        VS source;
 
-        public DBRow((string, DBColumn)[] cells, VS src)
+        public DBRow((string, DBColumn)[] cells, VS src, DBTable parent)
         {
             dbcells.AddRange(from t in cells select new DBCell(t.Item1, t.Item2, this, src));
             ID = (int)dbcells[0].ValueObject;
+            Parent = parent;
+            source = src;
         }
 
         public DBCell[] GetCells()
@@ -410,7 +419,16 @@ namespace VNC.dbvn
 
         public void Delete()
         {
-            ElementDeleted?.Invoke(this);
+            foreach (var cell in dbcells)
+            {
+                if (cell.isBigValue)
+                {
+                    string fn = source.Src(cell.ValueObject.ToString(), out VSType t);
+                    if (File.Exists(fn))
+                        File.Delete(fn);
+                }
+            }
+            Parent.DeleteRow(ID);
         }
     }
 
@@ -458,6 +476,32 @@ namespace VNC.dbvn
             }
         }
 
+        public void SetBigValue(string value)
+        {
+            string full_path = src.Src(string.Format("cell://{2}cell{0}{1}.dat", Row.ID, Column.ID, Row.Parent.Name), out VSType t);
+            File.WriteAllText(full_path, value);
+            this.value = string.Format("cell://{2}cell{0}{1}.dat", Row.ID, Column.ID, Row.Parent.Name);
+        }
+
+        public string GetBigValue()
+        {
+            string path = src.Src(value, out VSType vstype);
+            if (vstype == VSType.Cell)
+            {
+                return File.ReadAllText(path);
+            }
+            else return null;
+        }
+
+        public bool isBigValue
+        {
+            get
+            {
+                src.Src(value, out VSType t);
+                return t == VSType.Cell;
+            }
+        }
+
         public DBRow Row { get; private set; }
         public DBColumn Column { get; private set; }
 
@@ -469,6 +513,7 @@ namespace VNC.dbvn
             value = element == null ? null : element.ToString();
             Column = column;
             Row = row;
+            src = source;
         }
 
         public DBCell(object element, int column, int row, VS source)
@@ -476,6 +521,7 @@ namespace VNC.dbvn
             value = element.ToString();
             iRow = row;
             iColumn = column;
+            src = source;
         }
     }
 }
