@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VNC.dbvn
 {
-    public class VDataBase
+    public class DataBaseWorker
     {
 
     }

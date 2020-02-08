@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // Общие сведения об этой сборке предоставляются следующим набором
 // набора атрибутов. Измените значения этих атрибутов для изменения сведений,
 // связанные со сборкой.
-[assembly: AssemblyTitle("vmdbw")]
+[assembly: AssemblyTitle("vndbw")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("vmdbw")]
+[assembly: AssemblyProduct("vndbw")]
 [assembly: AssemblyCopyright("Copyright ©  2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // Следующий GUID служит для идентификации библиотеки типов, если этот проект будет видимым для COM
-[assembly: Guid("14ebec39-43c9-4379-91e1-9f1e10cc03fc")]
+[assembly: Guid("93c24003-8b0c-4119-b07e-09d85a45f93d")]
 
 // Сведения о версии сборки состоят из указанных ниже четырех значений:
 //

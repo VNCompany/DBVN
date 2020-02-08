@@ -20,7 +20,7 @@ namespace VNC.dbvn
         public event Action<DBTable> TableSaved;
         public event Action<DBTable> TableDeleted;
 
-        public static DBTable CreateTable(string name, params DBColumn[] columns)
+        public static DBTable CreateTable(string name, VS source, params DBColumn[] columns)
         {
             List<DBColumn> cc = new List<DBColumn>();
             cc.Add(new DBColumn("id", false, ColumnDateType.None));
@@ -30,7 +30,7 @@ namespace VNC.dbvn
                     throw new VDataBaseException("Не допускается хранение стобцов с одинаковым именем. Ошибка парсинга", "vdbobjs", 0xa);
                 cc.Add(column);
             }
-            return new DBTable(new string[][] { cc.Select(t => t.ToString()).ToArray() }, 1, name);
+            return new DBTable(new string[][] { cc.Select(t => t.ToString()).ToArray() }, 1, name, source);
         }
 
         bool err = false;
@@ -47,14 +47,18 @@ namespace VNC.dbvn
         List<DBColumn> cols = new List<DBColumn>();
         List<DBRow> rows = new List<DBRow>();
 
+        VS src;
+
         public int Increment { get; private set; }
 
-        public DBTable(string[][] @base, int increment, string name)
+        public DBTable(string[][] @base, int increment, string name, VS source)
         {
             Name = name;
 
             cols.Clear();
             rows.Clear();
+
+            src = source;
 
             if(increment < 1) throw new VDataBaseException("Значение инкремента неверно. Ошибка парсинга", "vdbobjs", 0x2);
             if(@base.Length < 1 || @base[0].Length < 2) throw new VDataBaseException("Неверный формат таблицы. Ошибка парсинга", "vdbobjs", 0x1);
@@ -78,7 +82,7 @@ namespace VNC.dbvn
                             @base[r][c] = null;
                         cells[c] = (@base[r][c], cols[c]);
                     }
-                    dbr = new DBRow(cells);
+                    dbr = new DBRow(cells, src);
                     dbr.ElementDeleted += RowDeleted;
                     rows.Add(dbr);
                 }
@@ -146,7 +150,7 @@ namespace VNC.dbvn
                 result[i] = (row[i], cols[i]);
             }
 
-            DBRow dbr = new DBRow(result);
+            DBRow dbr = new DBRow(result, src);
             dbr.ElementDeleted += RowDeleted;
             rows.Add(dbr);
             Increment++;
@@ -377,9 +381,9 @@ namespace VNC.dbvn
         List<DBCell> dbcells = new List<DBCell>();
         public int ID { get; private set; }
 
-        public DBRow((string, DBColumn)[] cells)
+        public DBRow((string, DBColumn)[] cells, VS src)
         {
-            dbcells.AddRange(from t in cells select new DBCell(t.Item1, t.Item2, this));
+            dbcells.AddRange(from t in cells select new DBCell(t.Item1, t.Item2, this, src));
             ID = (int)dbcells[0].ValueObject;
         }
 
@@ -413,6 +417,8 @@ namespace VNC.dbvn
     public class DBCell
     {
         string value;
+
+        VS src;
 
         public object ValueObject
         {
@@ -458,14 +464,14 @@ namespace VNC.dbvn
         public int iRow { get; private set; }
         public int iColumn { get; private set; }
 
-        public DBCell(object element, DBColumn column, DBRow row)
+        public DBCell(object element, DBColumn column, DBRow row, VS source)
         {
             value = element == null ? null : element.ToString();
             Column = column;
             Row = row;
         }
 
-        public DBCell(object element, int column, int row)
+        public DBCell(object element, int column, int row, VS source)
         {
             value = element.ToString();
             iRow = row;

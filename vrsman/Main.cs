@@ -7,7 +7,7 @@ using System.IO;
 
 namespace VNC.dbvn
 {
-    public class VResourceManager
+    public class VResourceManager : IVResourceManager
     {
         DirectoryInfo path;
 
@@ -19,7 +19,7 @@ namespace VNC.dbvn
                 throw new DirectoryNotFoundException("База повреждена");
         }
 
-        public VResource this[string res_name]
+        public IVResource this[string res_name]
         {
             get
             {
@@ -84,7 +84,7 @@ namespace VNC.dbvn
         }
     }
 
-    public class VResource
+    public class VResource : IVResource
     {
         FileInfo fi;
         public VResource(string file)

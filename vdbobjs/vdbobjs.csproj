@@ -46,7 +46,13 @@
   <ItemGroup>
     <Compile Include="DataBaseTableElements.cs" />
     <Compile Include="Exception.cs" />
+    <Compile Include="IResourceManager.cs" />
+    <Compile Include="IVConfigManager.cs" />
+    <Compile Include="MD5.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SourceManager.cs" />
+    <Compile Include="VConfig.cs" />
+    <Compile Include="VDataBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

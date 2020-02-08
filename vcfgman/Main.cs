@@ -7,7 +7,7 @@ using System.IO;
 
 namespace VNC.dbvn
 {
-    public class VConfigManager
+    public class VConfigManager : IVConfigManager
     {
         DirectoryInfo path;
 

@@ -44,5 +44,11 @@
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\vdbobjs\vdbobjs.csproj">
+      <Project>{dc24e3d1-5425-4640-a8cf-f94162d34506}</Project>
+      <Name>vdbobjs</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{14EBEC39-43C9-4379-91E1-9F1E10CC03FC}</ProjectGuid>
+    <ProjectGuid>{93C24003-8B0C-4119-B07E-09D85A45F93D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>VNC.dbvn</RootNamespace>
-    <AssemblyName>vmdbw</AssemblyName>
+    <AssemblyName>vndbw</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -43,6 +43,24 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\vcfgman\vcfgman.csproj">
+      <Project>{9cf994c3-3c56-40d6-bc1f-13a8e1fd06ef}</Project>
+      <Name>vcfgman</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\vdbobjs\vdbobjs.csproj">
+      <Project>{dc24e3d1-5425-4640-a8cf-f94162d34506}</Project>
+      <Name>vdbobjs</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\vdbread\vdbread.csproj">
+      <Project>{2f1b7fbb-1138-4a6e-b420-df60fc9e9ad5}</Project>
+      <Name>vdbread</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\vrsman\vrsman.csproj">
+      <Project>{ad94dca6-8794-4ad9-ab07-07f778be885b}</Project>
+      <Name>vrsman</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
