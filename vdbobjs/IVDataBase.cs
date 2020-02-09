@@ -12,5 +12,14 @@ namespace VNC.dbvn
         IVResourceManager Resources { get; }
         IVConfigManager Configs { get; }
         DBTableManager Tables { get; }
+        DBInfo GetInfo();
+    }
+
+    public struct DBInfo
+    {
+        public string auth_code { get; set; }
+        public string db_name { get; set; }
+        public string author { get; set; }
+        public string desription { get; set; }
     }
 }

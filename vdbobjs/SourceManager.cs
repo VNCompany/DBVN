@@ -131,8 +131,8 @@ namespace VNC.dbvn
 
         public static bool SystemExists(out string dbvn_path) 
         {
-            RegistryKey reg = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64);
-            var reg_software = reg.OpenSubKey("SOFTWARE");
+            RegistryKey reg = Registry.CurrentUser;
+            var reg_software = reg.OpenSubKey("Software");
             var reg_vnc = reg_software.OpenSubKey("VNCompany");
             if (reg_vnc != null)
             {
@@ -155,8 +155,8 @@ namespace VNC.dbvn
 
         public static void RegistryAdd(string path)
         {
-            RegistryKey reg = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64);
-            var reg_software = reg.OpenSubKey("SOFTWARE", true);
+            RegistryKey reg = Registry.CurrentUser;
+            var reg_software = reg.OpenSubKey("Software", true);
             RegistryKey reg_vnc;
             if ((reg_vnc = reg_software.OpenSubKey("VNCompany", true)) == null)
             {

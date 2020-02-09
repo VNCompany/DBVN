@@ -98,11 +98,12 @@ namespace VNC.dbvn
         public void Delete()
         {
             fi.Delete();
+            fi.Refresh();
         }
 
         public bool Exists
         {
-            get { return fi.Exists; }
+            get { return File.Exists(fi.FullName); }
         }
 
         public FileInfo FileInfo()

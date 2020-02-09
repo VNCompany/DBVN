@@ -462,6 +462,20 @@ namespace VNC.dbvn
             }
         }
 
+        public IVResource ValueResource
+        {
+            get
+            {
+                string path = src.Src(value, out VSType vst);
+                if (vst == VSType.Resource && path != null)
+                {
+                    return new DBTResSpec(path);
+                }
+                else
+                    return null;
+            }
+        }
+
         public void SetValue(object value)
         {
             if (Column.Name != "id")
@@ -481,6 +495,12 @@ namespace VNC.dbvn
             string full_path = src.Src(string.Format("cell://{2}cell{0}{1}.dat", Row.ID, Column.ID, Row.Parent.Name), out VSType t);
             File.WriteAllText(full_path, value);
             this.value = string.Format("cell://{2}cell{0}{1}.dat", Row.ID, Column.ID, Row.Parent.Name);
+        }
+
+        public void SetResourceValue(IVResource resource)
+        {
+            string full_path = resource.FullName;
+            this.value = "resource://" + resource.FileInfo().Name;
         }
 
         public string GetBigValue()
@@ -522,6 +542,50 @@ namespace VNC.dbvn
             iRow = row;
             iColumn = column;
             src = source;
+        }
+
+        public override string ToString()
+        {
+            return value;
+        }
+    }
+
+    class DBTResSpec : IVResource
+    {
+        FileInfo fn;
+        public DBTResSpec(string path)
+        {
+            fn = new FileInfo(path);
+            if (!fn.Exists) throw new FileNotFoundException("Файл \"" + path + "\" не найден.", path);
+        }
+
+        public void Delete()
+        {
+            if (fn.Exists)
+                fn.Delete();
+            fn.Refresh();
+        }
+
+        public FileInfo FileInfo()
+        {
+            return fn;
+        }
+
+        public string FullName => fn.FullName;
+        public bool Exists => File.Exists(FullName);
+
+        public void GetBytes(byte[] buffer, int offset, int count = -1)
+        {
+            using (var fs = new FileStream(fn.FullName, FileMode.Open, FileAccess.Read))
+            {
+                if(count == -1) count = Convert.ToInt32(fs.Length);
+                fs.Read(buffer, offset, count);
+            }
+        }
+
+        public override string ToString()
+        {
+            return File.ReadAllText(fn.FullName);
         }
     }
 }

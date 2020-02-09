@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Xml.Linq;
 
 namespace VNC.dbvn
 {
@@ -94,6 +95,18 @@ namespace VNC.dbvn
                 dbbr.Load(table.Parse(), table.Increment);
                 dbbr.Write();
             }
+        }
+
+        public DBInfo GetInfo()
+        {
+            XElement doc = XDocument.Load(Path.Combine(src.FullName, "info.xml")).Element("information");
+            return new DBInfo()
+            {
+                auth_code = doc.Element("auth_code").Value,
+                db_name = doc.Element("db_name").Value,
+                author = doc.Element("author").Value,
+                desription = doc.Element("description").Value
+            };
         }
 
         /// <summary>
